@@ -5,6 +5,7 @@ import EmployeeCard from "../components/EmployeeCard.js";
 
 function reducer(state, action) {
   switch (action.type) {
+
     case "add": {
       const employeeListdata = [...state.employeeList];
       employeeListdata[action.payLoad - 1].isAdded =
@@ -21,6 +22,7 @@ function reducer(state, action) {
         teamList: teamListData,
       };
     }
+
     case "remove": {
       const employeeListdata = [...state.employeeList];
       employeeListdata[action.payLoad - 1].isAdded =
@@ -38,6 +40,19 @@ function reducer(state, action) {
         teamList: teamListData,
       };
     }
+
+    case 'sort':{
+        const teamListData = [...state.teamList];
+        teamListData.sort((curr,next)=>{
+            return curr.age - next.age
+        })
+
+        return{
+            ...state,
+            teamList : teamListData
+        }
+    }
+
     default:
       return { ...state };
   }
@@ -55,7 +70,6 @@ const LandingScreen = () => {
   }
 
   function removeEmployee(id) {
-    console.log("removing");
     dispatch({ type: "remove", payLoad: id });
   }
 
@@ -70,6 +84,10 @@ const LandingScreen = () => {
     const averageAge = totalAge / state.teamList.length;
 
     return averageAge.toFixed(2)
+  }
+
+  function sortHandler(){
+    dispatch({type: "sort"})
   }
 
   return (
@@ -93,6 +111,7 @@ const LandingScreen = () => {
       <div id="team-details-card">
         <div id="team-list-container">
             <h2>Team</h2>
+            <button id="sorting-btn" onClick={sortHandler}>Sort by age</button>
             {state.teamList.map((elem) => {
             return (
                 <EmployeeCard
