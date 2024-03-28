@@ -2,61 +2,62 @@ import React, { useReducer } from "react";
 import "./LandingScreen.css";
 import employees from "../data.js";
 import EmployeeCard from "../components/EmployeeCard.js";
+import reducer from "../reducer.js";
 
-function reducer(state, action) {
-  switch (action.type) {
+// function reducer(state, action) {
+//   switch (action.type) {
 
-    case "add": {
-      const employeeListdata = [...state.employeeList];
-      employeeListdata[action.payLoad - 1].isAdded =
-        !employeeListdata[action.payLoad - 1].isAdded;
+//     case "add": {
+//       const employeeListdata = [...state.employeeList];
+//       employeeListdata[action.payLoad - 1].isAdded =
+//         !employeeListdata[action.payLoad - 1].isAdded;
 
-      const teamListData = [
-        ...state.teamList,
-        employeeListdata[action.payLoad - 1],
-      ];
+//       const teamListData = [
+//         ...state.teamList,
+//         employeeListdata[action.payLoad - 1],
+//       ];
 
-      return {
-        ...state,
-        employeeList: employeeListdata,
-        teamList: teamListData,
-      };
-    }
+//       return {
+//         ...state,
+//         employeeList: employeeListdata,
+//         teamList: teamListData,
+//       };
+//     }
 
-    case "remove": {
-      const employeeListdata = [...state.employeeList];
-      employeeListdata[action.payLoad - 1].isAdded =
-        !employeeListdata[action.payLoad - 1].isAdded;
+//     case "remove": {
+//       const employeeListdata = [...state.employeeList];
+//       employeeListdata[action.payLoad - 1].isAdded =
+//         !employeeListdata[action.payLoad - 1].isAdded;
 
-      const teamListData = state.teamList.filter((elem) => {
-        if (elem.id === action.payLoad) {
-          return false;
-        }
-        return true;
-      });
-      return {
-        ...state,
-        employeeList: employeeListdata,
-        teamList: teamListData,
-      };
-    }
+//       const teamListData = state.teamList.filter((elem) => {
+//         if (elem.id === action.payLoad) {
+//           return false;
+//         }
+//         return true;
+//       });
+//       return {
+//         ...state,
+//         employeeList: employeeListdata,
+//         teamList: teamListData,
+//       };
+//     }
 
-    case 'sort':{
-        const teamListData = [...state.teamList];
-        teamListData.sort((curr,next)=>{
-            return curr.age - next.age
-        })
+//     case 'sort':{
+//         const teamListData = [...state.teamList];
+//         teamListData.sort((curr,next)=>{
+//             return curr.age - next.age
+//         })
 
-        return{
-            ...state,
-            teamList : teamListData
-        }
-    }
+//         return{
+//             ...state,
+//             teamList : teamListData
+//         }
+//     }
 
-    default:
-      return { ...state };
-  }
-}
+//     default:
+//       return { ...state };
+//   }
+// }
 
 const LandingScreen = () => {
   const [state, dispatch] = useReducer(reducer, {
